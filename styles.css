@@ -1,0 +1,23 @@
+body {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+  
+  
+  canvas {
+    border: 1px solid #ccc;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    max-height: 400px;
+  }
+  
+  .btns-area {
+    margin-top: 20px;
+  }
+  
+  .btns {
+    margin: 5px;
+  }
+  
