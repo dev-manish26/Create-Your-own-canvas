@@ -11,6 +11,7 @@ body {
     max-width: 600px;
     height: auto;
     max-height: 400px;
+    cursor: crosshair;
   }
   
   .btns-area {
