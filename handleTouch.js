@@ -8,9 +8,9 @@ let lastX = 0;
 let lastY = 0;
 
 // Function to get the cursor position relative to the canvas
-function getTouchPosition(e) {
+function getTouchPosition(canvas, touchEvent) {
   const rect = canvas.getBoundingClientRect();
-  const touch = e.touches[0];
+  const touch = touchEvent.targetTouches[0];
   const offsetX = touch.clientX - rect.left;
   const offsetY = touch.clientY - rect.top;
 
@@ -20,8 +20,8 @@ function getTouchPosition(e) {
 // Function to handle touch start event
 function handleTouchStart(e) {
   e.preventDefault();
-  const { x, y } = getTouchPosition(e);
-  [lastX, lastY] = [x, y];
+  const touchPos = getTouchPosition(canvas, e);
+  [lastX, lastY] = [touchPos.x, touchPos.y];
   isDrawing = true;
 }
 
@@ -30,7 +30,8 @@ function handleTouchMove(e) {
   e.preventDefault();
   if (!isDrawing) return;
   
-  const { x, y } = getTouchPosition(e);
+  const touchPos = getTouchPosition(canvas, e);
+  const { x, y } = touchPos;
   
   ctx.beginPath();
   ctx.moveTo(lastX, lastY);
