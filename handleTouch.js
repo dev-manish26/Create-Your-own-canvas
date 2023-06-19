@@ -7,17 +7,22 @@ let isDrawing = false;
 let lastX = 0;
 let lastY = 0;
 
+// Function to get the cursor position relative to the canvas
+function getTouchPosition(e) {
+  const rect = canvas.getBoundingClientRect();
+  const touch = e.touches[0];
+  const offsetX = touch.clientX - rect.left;
+  const offsetY = touch.clientY - rect.top;
+
+  return { x: offsetX, y: offsetY };
+}
+
 // Function to handle touch start event
 function handleTouchStart(e) {
   e.preventDefault();
-  const touch = e.touches[0];
-  const { clientX, clientY } = touch;
-  const rect = e.target.getBoundingClientRect();
-  const offsetX = clientX - rect.left;
-  const offsetY = clientY - rect.top;
-  
+  const { x, y } = getTouchPosition(e);
+  [lastX, lastY] = [x, y];
   isDrawing = true;
-  [lastX, lastY] = [offsetX, offsetY];
 }
 
 // Function to handle touch move event
@@ -25,22 +30,18 @@ function handleTouchMove(e) {
   e.preventDefault();
   if (!isDrawing) return;
   
-  const touch = e.touches[0];
-  const { clientX, clientY } = touch;
-  const rect = e.target.getBoundingClientRect();
-  const offsetX = clientX - rect.left;
-  const offsetY = clientY - rect.top;
-
+  const { x, y } = getTouchPosition(e);
+  
   ctx.beginPath();
   ctx.moveTo(lastX, lastY);
-  ctx.lineTo(offsetX, offsetY);
+  ctx.lineTo(x, y);
   ctx.stroke();
   
-  [lastX, lastY] = [offsetX, offsetY];
+  [lastX, lastY] = [x, y];
 }
 
 // Function to handle touch end event
-function handleTouchEnd() {
+function handleTouchEnd(e) {
   isDrawing = false;
 }
 
