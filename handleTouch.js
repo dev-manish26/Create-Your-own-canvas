@@ -1,3 +1,7 @@
+// Get the canvas element
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
 // Variables to track touch state
 let isDrawing = false;
 let lastX = 0;
