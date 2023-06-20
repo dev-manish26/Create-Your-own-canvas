@@ -61,12 +61,33 @@ const resetBtn = document.getElementById("reset-btn");
 resetBtn.addEventListener("click", clearCanvas);
 
 // Function to download the canvas as an image
+// function downloadCanvas() {
+//   const link = document.createElement("a");
+//   link.href = canvas.toDataURL("image/png");
+//   link.download = "signature.png";
+//   link.click();
+// }
+
 function downloadCanvas() {
-  const link = document.createElement("a");
-  link.href = canvas.toDataURL("image/png");
-  link.download = "signature.png";
+  // Create a temporary canvas to draw the signature with a white background
+  const tempCanvas = document.createElement('canvas');
+  const tempCtx = tempCanvas.getContext('2d');
+  tempCanvas.width = canvas.width;
+  tempCanvas.height = canvas.height;
+  tempCtx.fillStyle = 'white';
+  tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+  tempCtx.drawImage(canvas, 0, 0);
+
+  // Convert the signature to a JPEG image
+  const signatureDataUrl = tempCanvas.toDataURL('image/jpeg');
+
+  // Create a temporary link element to trigger the download
+  const link = document.createElement('a');
+  link.href = signatureDataUrl;
+  link.download = 'signature.jpg';
   link.click();
 }
+
 
 // Event listener for the download button
 const downloadBtn = document.getElementById("download-btn");
